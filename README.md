@@ -11,15 +11,36 @@
 $ cmake -B build
 $ cmake --build build -j
 ```
-## start
+## start programm
 
 ```
 $ cd build/
 $ ./main
 ```
 
-## stop
+## function
 
+* start collection
+```
+$ start
+```
+
+* stop collection
 ```
 $ stop
+```
+* cleanup
+```
+
+$ clean
+```
+
+* get current params
+```
+$ get
+```
+
+* quit
+```
+$ quit
 ```

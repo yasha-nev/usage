@@ -16,11 +16,13 @@ include_directories(
 set(SRCS
     src/CSVWrite.cpp
     src/UsageManager.cpp
+    src/Collector.cpp
     )
 
 set(HEADERS
     include/CSVWrite.hpp
     include/UsageManager.hpp
+    include/Collector.hpp
     )
 
 

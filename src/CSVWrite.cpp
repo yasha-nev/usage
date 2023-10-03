@@ -10,27 +10,20 @@ CSVWriter::~CSVWriter(){
 }
 
 void CSVWriter::writeTabs(std::vector<std::string> &tabs){
-    if (!tabs.size() && m_tabs.size()){
-        return;
-    }
-    
     m_tabs.clear();
     for (auto tab : tabs){
         m_tabs.push_back(tab);
-        m_file << tab << ", ";
+        std::string sup = std::string(' ', 25 - tab.size());
+        m_file << tab << sup << ", ";
     }
     m_file << "\n";
 }
 
 void CSVWriter::writeParams(std::vector<std::string> &params){
-    if (params.size() != m_tabs.size()){
-        return;
-    }
-    
     for (auto param : params){
-        m_file << param << ", ";
-        
+        std::string sup = std::string(' ', 25 - param.size());
+        m_file << param << sup << ", ";
     }
-    
+
     m_file << "\n";
 }
