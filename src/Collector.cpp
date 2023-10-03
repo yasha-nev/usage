@@ -38,7 +38,7 @@ void Collector::stopCollect(){
         return;
     }
     
-    //Говорим потокам остановится
+    //Говорим потокам остановиться
     m_run.store(false, std::memory_order_relaxed);
     
     //Ловим
