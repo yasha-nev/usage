@@ -39,8 +39,3 @@ add_executable(main main.cpp)
 
 find_package(Threads REQUIRED)
 target_link_libraries(main usage Threads::Threads)
-
-#target_link_libraries(main PRIVATE Threads::Threads)
-
-#install(TARGETS main
-#    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
