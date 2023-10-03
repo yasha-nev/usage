@@ -101,7 +101,7 @@ void UsageManager::updateRamInfo(){
     mach_port_t machPort = mach_host_self();
     
     count = sizeof(vmStats) / sizeof(natural_t);
-    // Пытаемся запросить статистику об использоваемой памяти
+    // Пытаемся запросить статистику об используемой памяти
     if (KERN_SUCCESS == host_page_size(machPort, &pageSize) &&
         KERN_SUCCESS == host_statistics64(machPort, HOST_VM_INFO,
                                         (host_info64_t)&vmStats, &count))
