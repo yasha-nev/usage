@@ -8,7 +8,7 @@
 #include "CSVWrite.hpp"
 #include "UsageManager.hpp"
 
-#define METRIC_TIME_SLEEP 10s
+#define METRIC_TIME_SLEEP 60s
 
 using namespace std::chrono_literals;
 
@@ -18,22 +18,16 @@ public:
     ~Collector();
     void startCollect();
     void stopCollect();
-    double getCurrantCpuUsage();
-    long long getCurrantFreeRam();
-    long long getCurrantUsageRam();
+    std::string getCurrentMetric(std::string name);
     void cleanup();
 
 private:
-    void cpuThread();
-    void ramThread();
-    
-    UsageManager m_usage;
+    void usageThread(UsageManager *usage);
     CSVWriter m_writer;
     std::mutex m_mtx;
     std::atomic<bool> m_run;
-    
-    std::thread m_cpuThr;
-    std::thread m_ramThr;
+    std::vector<UsageManager *> m_usages;
+    std::vector<std::thread *> m_thrs;
 };
 
 

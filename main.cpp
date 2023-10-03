@@ -22,9 +22,9 @@ int main(){
             collect.cleanup();
         }
         else if (str == "get"){
-            std::cout << "cpu (%): " << collect.getCurrantCpuUsage() << "\n"
-            << "free ram memory (bit): " << collect.getCurrantFreeRam() << "\n"
-            << "usage ram memory (bit): " << collect.getCurrantUsageRam() << "\n";
+            std::cout << "cpu (%): " << collect.getCurrentMetric("cpu_usage") << "\n"
+            << "free ram memory (bit): " << collect.getCurrentMetric("free_mem") << "\n"
+            << "usage ram memory (bit): " << collect.getCurrentMetric("usage_mem") << "\n";
         }
         
         else if (str == "quit"){
