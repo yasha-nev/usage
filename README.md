@@ -31,7 +31,6 @@ $ stop
 ```
 * cleanup
 ```
-
 $ clean
 ```
 
