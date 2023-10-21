@@ -98,6 +98,11 @@ RamFreeManager::RamFreeManager(){
     m_metricName = "free_mem";
 }
 
+static double bytes2gbytes(double bytes){
+    return bytes / 1024 / 1024 / 1024;
+}
+
+
 std::string RamFreeManager::getMetric(){
     return std::to_string(m_freeMemory);
 }
@@ -111,6 +116,7 @@ void RamFreeManager::updateMetric(){
     mach_msg_type_number_t count;
     vm_statistics64_data_t vmStats;
     mach_port_t machPort = mach_host_self();
+    long long free_mem;
     
     count = sizeof(vmStats) / sizeof(natural_t);
     // Пытаемся запросить статистику об используемой памяти
@@ -119,8 +125,9 @@ void RamFreeManager::updateMetric(){
                                         (host_info64_t)&vmStats, &count))
     {
         // Если удалось
-        // Магические вычесления. Результат должен быть в битах
-        m_freeMemory = (int64_t)vmStats.free_count * (int64_t)pageSize;
+        // Магические вычесления. Результат должен быть в гб
+        free_mem = (int64_t)vmStats.free_count * (int64_t)pageSize;
+        m_freeMemory = bytes2gbytes(free_mem);
     }
 }
 
@@ -142,6 +149,7 @@ void RamUsageManager::updateMetric(){
     mach_msg_type_number_t count;
     vm_statistics64_data_t vmStats;
     mach_port_t machPort = mach_host_self();
+    long long used_mem;
     
     count = sizeof(vmStats) / sizeof(natural_t);
     // Пытаемся запросить статистику об используемой памяти
@@ -150,9 +158,11 @@ void RamUsageManager::updateMetric(){
                                         (host_info64_t)&vmStats, &count))
     {
         // Если удалось
-        // Магические вычесления. Результат должен быть в битах
-        m_usedMemory = ((int64_t)vmStats.active_count +
+        // Магические вычесления. Результат должен быть в гб
+        used_mem = ((int64_t)vmStats.active_count +
                                  (int64_t)vmStats.inactive_count +
-                                 (int64_t)vmStats.wire_count) *  (int64_t)pageSize;
+                        (int64_t)vmStats.wire_count) *  (int64_t)pageSize;
+        m_usedMemory = bytes2gbytes(used_mem);
+        
     }
 }

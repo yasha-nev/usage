@@ -39,7 +39,7 @@ public:
     virtual void cleanup() override;
     virtual std::string getMetric() override;
 private:
-    long long m_usedMemory;
+    double m_usedMemory;
 };
 
 class RamFreeManager : public UsageManager {
@@ -49,7 +49,7 @@ public:
     virtual void cleanup() override;
     virtual std::string getMetric() override;
 private:
-    long long m_freeMemory;
+    double m_freeMemory;
 };
 
 

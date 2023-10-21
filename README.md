@@ -1,6 +1,8 @@
 # ***APPLE Mac os CPU/RAM USAGE using mach***
 ---
 
+The program collects data on processor load, used and free RAM memory and saves the data to a csv file once a minute.
+
 ## using
 * XNU Mach kernel
 * Threads
@@ -19,25 +21,6 @@ $ ./main
 ```
 
 ## function
-
-* start collection
-```
-$ start
-```
-
-* stop collection
-```
-$ stop
-```
-* cleanup
-```
-$ clean
-```
-
-* get current params
-```
-$ get
-```
 
 * quit
 ```

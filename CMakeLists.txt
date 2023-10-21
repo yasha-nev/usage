@@ -30,7 +30,6 @@ add_compile_options(
     -Wall
     -Wextra
     -std=c++17
-    -stdlib=libc++
     )
 
 add_library(usage STATIC ${SRCS} ${HEADERS})
