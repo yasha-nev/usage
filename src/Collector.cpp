@@ -1,9 +1,9 @@
 #include "Collector.hpp"
 
 Collector::Collector(){
-    m_usages.push_back(new CpuUsageManager());
-    m_usages.push_back(new RamFreeManager());
-    m_usages.push_back(new RamUsageManager());
+    m_usages.push_back(std::make_shared<CpuUsageManager>());
+    m_usages.push_back(std::make_shared<RamFreeManager>());
+    m_usages.push_back(std::make_shared<RamUsageManager>());
     
     std::vector <std::string> tabs = {"time", "param", "var"};
     m_writer.writeTabs(tabs);
@@ -13,9 +13,6 @@ Collector::Collector(){
 
 Collector::~Collector(){
     stopCollect();
-    for (auto usage : m_usages){
-        delete usage;
-    }
     m_usages.clear();
 }
 
@@ -28,8 +25,8 @@ void Collector::startCollect(){
     m_run.store(true, std::memory_order_relaxed);
     
     for (auto usage : m_usages){
-        std::thread *thr = new std::thread(&Collector::usageThread, this, usage);
-        m_thrs.push_back(thr);
+        auto ptr = std::make_shared<std::thread>(&Collector::usageThread, this, usage);
+        m_thrs.push_back(ptr);
     }
 }
 
@@ -44,12 +41,11 @@ void Collector::stopCollect(){
     //Ловим
     for (auto thr : m_thrs){
         thr->join();
-        delete thr;
     }
-    m_thrs.clear();
+    m_thrs.clear(); 
 }
 
-void Collector::usageThread(UsageManager *usage){
+void Collector::usageThread(std::shared_ptr<UsageManager> usage){
     std::vector <std::string> param = {"", "", ""};
     auto past = std::chrono::system_clock::now();
     
@@ -74,11 +70,9 @@ void Collector::usageThread(UsageManager *usage){
         param[1] = usage->getMetricName();
         param[2] = usage->getMetric();
         
-        
         //Блокируем запись в файл для других потоков
-        m_mtx.lock();
+        const std::lock_guard<std::mutex> lock(m_mtx);
         m_writer.writeParams(param);
-        m_mtx.unlock();
         
         past = std::chrono::system_clock::now();
     }

@@ -22,12 +22,12 @@ public:
     void cleanup();
 
 private:
-    void usageThread(UsageManager *usage);
+    void usageThread(std::shared_ptr<UsageManager>);
     CSVWriter m_writer;
     std::mutex m_mtx;
     std::atomic<bool> m_run;
-    std::vector<UsageManager *> m_usages;
-    std::vector<std::thread *> m_thrs;
+    std::vector<std::shared_ptr<UsageManager>> m_usages;
+    std::vector<std::shared_ptr<std::thread>>m_thrs;
 };
 
 

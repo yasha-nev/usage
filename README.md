@@ -1,26 +1,29 @@
 # ***APPLE Mac os CPU/RAM USAGE using mach***
 ---
 
-The program collects data on processor load, used and free RAM memory and saves the data to a csv file once a minute.
+Старый проект был немного допилен, чтоб удовлетворять условиям практической работы №2.
+(Использование мьютексов было изменено)
 
-## using
+Программа собирает данные загружености процессора, пямяти и сохраняет их в файл формата CSV.
+
+## Что используется:
 * XNU Mach kernel
 * Threads
 * CMake
 
-## build
+## Как собрать:
 ```
 $ cmake -B build
 $ cmake --build build -j
 ```
-## start programm
+## Как запустить:
 
 ```
 $ cd build/
 $ ./main
 ```
 
-## function
+## Функционал:
 
 * quit
 ```
